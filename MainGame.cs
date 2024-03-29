@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Comora;
 using System;
 
@@ -19,6 +21,12 @@ namespace TopDownRPGEngine
         Down,
         Left,
         Right
+    }
+
+    public static class Sounds
+    {
+        public static SoundEffect projectileSound;
+        public static Song backgroundMusic;
     }
 
     public class MainGame : Game
@@ -58,6 +66,8 @@ namespace TopDownRPGEngine
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Sounds.backgroundMusic = Content.Load<Song>("Sounds/nature");
+            Sounds.projectileSound = Content.Load<SoundEffect>("Sounds/blip");
             playerSprite = Content.Load<Texture2D>("Player/player");
             walkDown = Content.Load<Texture2D>("Player/walkDown");
             walkUp = Content.Load<Texture2D>("Player/walkUp");
@@ -70,6 +80,8 @@ namespace TopDownRPGEngine
             player.animations[1] = new SpriteAnimation(walkDown, 4, 8);
             player.animations[2] = new SpriteAnimation(walkLeft, 4, 8);
             player.animations[3] = new SpriteAnimation(walkRight, 4, 8);
+
+            MediaPlayer.Play(Sounds.backgroundMusic);
         }
 
         protected override void Update(GameTime gameTime)
